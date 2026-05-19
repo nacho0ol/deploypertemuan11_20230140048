@@ -42,4 +42,16 @@ public class AuthService {
         userRepository.save(user);
     }
 
+    public User getLoggedInUser() {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String username = authentication.getName();
+
+        return userRepository.findByUsername(username)
+                .orElseThrow(() ->
+                        new RuntimeException("User tidak ditemukan"));
+    }
+
 }
